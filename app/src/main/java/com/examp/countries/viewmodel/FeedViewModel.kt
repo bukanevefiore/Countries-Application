@@ -3,8 +3,19 @@ package com.examp.countries.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.examp.countries.model.Country
+import com.examp.countries.service.CountryAPIService
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 
 class FeedViewModel : ViewModel() {
+
+    private val countryApiService = CountryAPIService()
+    private val disposable = CompositeDisposable() // (aynı anda birden fazla call yaparken)api den veri çekerken kullan at matığıyla hafızada fazla yer kaplamasına engel oluyor
+
+
 
     val countries=MutableLiveData<List<Country>>()  // değiştirilebilir canlı ülke veri listesi
     val countryError=MutableLiveData<Boolean>()  // hata olması duurmundadki livedata( canlı veri )
@@ -13,14 +24,36 @@ class FeedViewModel : ViewModel() {
     // swipe refresh widgetı için sayfa yenileme işlemi fonksiyonu
     fun refreshData(){
 
-        val country=Country("Turkey","Asia","Ankara","TRY","Turkish","www.ss.com")
-        val country2=Country("France","Paris","EUR","Franch","Turkish","www.ss.com")
-        val country3=Country("Germany","Berlin","EUR","German","Turkish","www.ss.com")
+        getDataFromAPI()
+    }
 
-        val countryList= arrayListOf<Country>(country,country2,country3)
+    // servisten veri çekme işlemi
+    private fun getDataFromAPI(){
+        countryLoading.value=true
 
-        countries.value=countryList
-        countryError.value=false
-        countryLoading.value=false
+        disposable.add(
+                countryApiService.getData()
+                        .subscribeOn(Schedulers.newThread())  // arkaplanda yapılacak
+                        .observeOn(AndroidSchedulers.mainThread())  // arayüzde yapılacak
+                        .subscribeWith(object : DisposableSingleObserver<List<Country>>(){
+                            override fun onSuccess(t: List<Country>) {
+
+                                countries.value=t
+                                countryError.value=false
+                                countryLoading.value=false
+
+                            }
+
+                            override fun onError(e: Throwable) {
+
+                                countryLoading.value=false
+                                countryError.value=true
+                                e.printStackTrace()
+                            }
+
+
+                        })
+        )
+
     }
 }

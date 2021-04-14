@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.examp.countries.R
 import com.examp.countries.adapter.CountryAdapter
 import com.examp.countries.viewmodel.FeedViewModel
@@ -48,6 +49,20 @@ class FeedFragment : Fragment() {
         list.layoutManager=LinearLayoutManager(context)
         list.adapter=countryAdapter
 
+
+        // sayfa yenileme
+        view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout).setOnRefreshListener {
+
+            view.findViewById<RecyclerView>(R.id.countryList).visibility=View.GONE
+            view.findViewById<TextView>(R.id.countryError).visibility=View.GONE
+            view.findViewById<ProgressBar>(R.id.countryLoading).visibility=View.VISIBLE
+
+            viewModel.refreshData()
+            view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout).isRefreshing=false
+
+
+
+        }
 
         observeLiveData()
 
