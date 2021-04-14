@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.examp.countries.CountryFragmentArgs
+import com.examp.countries.view.CountryFragmentArgs
 import com.examp.countries.R
 
 
