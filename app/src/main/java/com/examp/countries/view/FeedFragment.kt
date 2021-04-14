@@ -62,7 +62,7 @@ class FeedFragment : Fragment() {
     }
 
     // feedviewmodel sınıfındaki livedata ları gözlemleme
-    fun observeLiveData(){
+    private fun observeLiveData(){
         val bar=view?.findViewById<ProgressBar>(R.id.countryLoading)
 
         // contries listeleme
