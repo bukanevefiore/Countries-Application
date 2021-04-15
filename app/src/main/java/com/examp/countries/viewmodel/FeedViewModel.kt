@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
 
 class FeedViewModel : ViewModel() {
 
@@ -38,9 +39,7 @@ class FeedViewModel : ViewModel() {
                         .subscribeWith(object : DisposableSingleObserver<List<Country>>(){
                             override fun onSuccess(t: List<Country>) {
 
-                                countries.value=t
-                                countryError.value=false
-                                countryLoading.value=false
+                                storeInSQLite(t)
 
                             }
 
@@ -54,6 +53,21 @@ class FeedViewModel : ViewModel() {
 
                         })
         )
+
+    }
+
+    // progressbar vs gösterilmesi vs
+    private fun showCountries(countryList: List<Country>){
+
+        countries.value=countryList
+        countryError.value=false
+        countryLoading.value=false
+    }
+
+    // aldığımız verileri sqlite a kaydetme
+    private fun storeInSQLite(list: List<Country>){
+
+
 
     }
 }
