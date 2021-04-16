@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName
 
 // verilerin sqlite içindeki (room database) i kullnmak için entity yazıyoruz
 //  her değişkenin üzerine kolon isimlerini belirtiyoruz
+//
 @Entity
 data class Country(
         @ColumnInfo(name= "name")
@@ -31,11 +32,13 @@ data class Country(
 
         @ColumnInfo(name = "flag")
         @SerializedName("flag")
-        val imageUrl: String?
+        val flag: String?
 )
 
 // json data mızda id olmadığı için burda yukraıdaki constructor dışında primarykey olarak oluşturuyoruz
+
 {
         @PrimaryKey(autoGenerate = true)
         var uuid: Int = 0
 }
+

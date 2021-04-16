@@ -1,10 +1,22 @@
 package com.examp.countries.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
-class BaseViewModel : ViewModel(),CoroutineScope {
+abstract class BaseViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
+
+    private val job= Job()
+
     override val coroutineContext: CoroutineContext
-        get() = TODO("Not yet implemented")
+        get() = job + Dispatchers.Main
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
+    }
 }

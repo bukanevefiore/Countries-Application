@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.examp.countries.R
 import com.examp.countries.adapter.CountryAdapter
 import com.examp.countries.viewmodel.FeedViewModel
+import kotlinx.android.synthetic.main.fragment_feed.*
 
 class FeedFragment : Fragment() {
 
@@ -45,20 +46,20 @@ class FeedFragment : Fragment() {
         viewModel=ViewModelProviders.of(this).get(FeedViewModel::class.java)
         viewModel.refreshData()
 
-        val list= view.findViewById<RecyclerView>(R.id.countryList)
-        list.layoutManager=LinearLayoutManager(context)
-        list.adapter=countryAdapter
+        //val list= view.findViewById<RecyclerView>(R.id.countryList)
+        countryList.layoutManager=LinearLayoutManager(context)
+        countryList.adapter=countryAdapter
 
 
         // sayfa yenileme
-        view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout).setOnRefreshListener {
+        swipeRefreshLayout.setOnRefreshListener {
 
-            view.findViewById<RecyclerView>(R.id.countryList).visibility=View.GONE
-            view.findViewById<TextView>(R.id.countryError).visibility=View.GONE
-            view.findViewById<ProgressBar>(R.id.countryLoading).visibility=View.VISIBLE
+            countryList.visibility=View.GONE
+            countryError.visibility=View.GONE
+            countryLoading.visibility=View.VISIBLE
 
-            viewModel.refreshData()
-            view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout).isRefreshing=false
+            viewModel.refreshFromAPI()
+            swipeRefreshLayout.isRefreshing=false
 
 
 

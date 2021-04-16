@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:scaleType="fitCenter"
         android:padding="10dp"
-        android:minHeight="200dp"></ImageView>
+        android:minHeight="200dp" />
 
     <TextView
         android:id="@+id/countryName"

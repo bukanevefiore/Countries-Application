@@ -27,10 +27,12 @@ interface CountryDao {
 
     // ülkelerden herhnagi birine tıklandığında tıklanan ülkenin ayrıntılarını getirir
     @Query("SELECT * FROM country WHERE uuid= :countryId")
-    suspend fun getaCountry(countryId : Int) : Country
+    suspend fun getCountry(countryId : Int) : Country
 
 
     @Query("DELETE FROM country")
     suspend fun deleteCountries()
+
+
 
 }

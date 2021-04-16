@@ -10,6 +10,7 @@ import com.examp.countries.model.Country
 @Database(entities = arrayOf(Country::class),version = 1)
 abstract class CountryDatabase : RoomDatabase(){
 
+
     // abstrack bir method oluşturup CountryDao interface ini döndürüyoruz
     abstract fun countryDao() : CountryDao
 
@@ -31,6 +32,7 @@ abstract class CountryDatabase : RoomDatabase(){
 
 
     }
+
 
 
 

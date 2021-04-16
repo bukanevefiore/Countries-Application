@@ -31,7 +31,7 @@ class CountryAdapter(val countryList: ArrayList<Country>): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
         holder.view.findViewById<TextView>(R.id.name).text = countryList[position].countryName
         holder.view.findViewById<TextView>(R.id.region).text = countryList[position].countryRegion
-        holder.view.findViewById<ImageView>(R.id.imageView).downloadUrl(countryList[position].imageUrl, placeholderProgressBar(holder.view.context))
+        holder.view.findViewById<ImageView>(R.id.imageView).downloadUrl(countryList[position].flag, placeholderProgressBar(holder.view.context))
 
         Log.d("sa",countryList[position].countryCurrency.toString())
 
