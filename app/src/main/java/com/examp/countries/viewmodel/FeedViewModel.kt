@@ -82,7 +82,7 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
                             override fun onSuccess(t: List<Country>) {
 
                                 storeInSQLite(t)
-                                //Toast.makeText(getApplication(),"Countries from api",Toast.LENGTH_LONG).show()
+                                Toast.makeText(getApplication(),"Countries from api",Toast.LENGTH_LONG).show()
 
                             }
 
@@ -133,6 +133,10 @@ class FeedViewModel(application: Application) : BaseViewModel(application) {
     }
 
 
+    override fun onCleared() {
+        super.onCleared()
 
+        disposable.clear()
+    }
 
 }
